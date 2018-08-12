@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GuessingGame.Controllers
 {
-    class GuessingController
+    public class GuessingController
     {
         private readonly Entity _root = new Entity("");
 

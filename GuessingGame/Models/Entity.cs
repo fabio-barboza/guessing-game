@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessingGame.Models
 {
-    class Entity
+    public class Entity
     {
         private List<Entity> _children = new List<Entity>();
 

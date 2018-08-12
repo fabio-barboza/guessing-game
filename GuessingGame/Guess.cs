@@ -14,24 +14,24 @@ namespace GuessingGame
     {
         private const string _gameName = "Guessing Game";
 
-        private GuessingController service = new GuessingController();
+        private GuessingController controller = new GuessingController();
 
         public Guess()
         {
-            service.AddChild("Monkey");
-            Entity entity = service.AddChild("lives on water");
-            entity = service.AddChild(entity, "Shark");
+            controller.AddChild("Monkey");
+            Entity entity = controller.AddChild("lives on water");
+            entity = controller.AddChild(entity, "Shark");
         }
 
         public void DoQuestions(List<Entity> entities = null)
         {
-            if (entities == null) entities = service.Root.Children;
+            if (entities == null) entities = controller.Root.Children;
 
             if (entities.Count > 1)
             {
                 entities.ForEach(e =>
                 {
-                    if (service.Found) return;
+                    if (controller.Found) return;
                     if (e.Children.Count == 0)
                     {
                         End(e);
@@ -62,17 +62,17 @@ namespace GuessingGame
             else
             {
                 //Caso seja necessário adicionar um no elemento, o mesmo deve ser feito após o termino da navegação na lista
-                service.NewEntityParent = entity.Parent ?? service.Root;
-                while (String.IsNullOrWhiteSpace(service.NewAnimal))
+                controller.NewEntityParent = entity.Parent ?? controller.Root;
+                while (String.IsNullOrWhiteSpace(controller.NewAnimal))
                 {
-                    service.NewAnimal = Interaction.InputBox("What was the animal that you thought about?", _gameName);
+                    controller.NewAnimal = Interaction.InputBox("What was the animal that you thought about?", _gameName);
                 }
-                while (String.IsNullOrWhiteSpace(service.NewTrait))
+                while (String.IsNullOrWhiteSpace(controller.NewTrait))
                 {
-                    service.NewTrait = Interaction.InputBox($"A {service.NewAnimal} ______ but a {entity.Parent.Children.Last().Description} does not (Fill it with an animal trait, like \"lives in water\").", _gameName);
+                    controller.NewTrait = Interaction.InputBox($"A {controller.NewAnimal} ______ but a {entity.Parent.Children.Last().Description} does not (Fill it with an animal trait, like \"lives in water\").", _gameName);
                 }
             }
-            service.Found = true;
+            controller.Found = true;
             return;
         }
 
@@ -80,8 +80,8 @@ namespace GuessingGame
         {
             while (MessageBox.Show("Think about an animal", _gameName, MessageBoxButtons.OKCancel) != DialogResult.Cancel)
             {
-                if (service.NewEntityParent != null) service.AddNew();
-                service.Reset();
+                if (controller.NewEntityParent != null) controller.AddNew();
+                controller.Reset();
                 DoQuestions();
             }
         }
