@@ -10,7 +10,7 @@ namespace GuessingGame
     {
         static void Main()
         {
-            new Guess().Start();
+            new Game().Start();
         }
     }
 }
