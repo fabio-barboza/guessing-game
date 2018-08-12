@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GuessingGame
 {
-    class Guess
+    public class Guess
     {
         private const string _gameName = "Guessing Game";
 
@@ -31,7 +31,7 @@ namespace GuessingGame
             {
                 entities.ForEach(e =>
                 {
-                    if (controller.Found) return;
+                    if (controller.End) return;
                     if (e.Children.Count == 0)
                     {
                         End(e);
@@ -57,6 +57,7 @@ namespace GuessingGame
             DialogResult result = MessageBox.Show($"Is the animal that you thought about a {entity.Description}?", _gameName, MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
+                controller.Win = true;
                 MessageBox.Show("I win again!", _gameName);
             }
             else
@@ -72,7 +73,7 @@ namespace GuessingGame
                     controller.NewTrait = Interaction.InputBox($"A {controller.NewAnimal} ______ but a {entity.Parent.Children.Last().Description} does not (Fill it with an animal trait, like \"lives in water\").", _gameName);
                 }
             }
-            controller.Found = true;
+            controller.End = true;
             return;
         }
 
@@ -83,6 +84,7 @@ namespace GuessingGame
                 if (controller.NewEntityParent != null) controller.AddNew();
                 controller.Reset();
                 DoQuestions();
+                MessageBox.Show(controller.Win.ToString());
             }
         }
     }

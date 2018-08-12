@@ -13,15 +13,16 @@ namespace GuessingGameTest
 
         private GuessingController controller = null;
 
-        public void DoQuestions(string trait, string thoughtAnimal, List<Entity> entities = null)
+        public bool DoQuestions(string trait, string thoughtAnimal, List<Entity> entities = null)
         {
+            bool result = false;
             if (entities == null) entities = controller.Root.Children;
 
             if (entities.Count > 1)
             {
                 entities.ForEach(e =>
                 {
-                    if (controller.Found) return;
+                    if (controller.End) return;
                     if (e.Children.Count == 0)
                     {
                         End(trait, thoughtAnimal, e);
@@ -38,8 +39,10 @@ namespace GuessingGameTest
             }
             else
             {
-                End(trait, thoughtAnimal, entities[0]);
+                result = End(trait, thoughtAnimal, entities[0]);
             }
+
+            return result;
         }
 
         private bool End(string trait, string thoughtAnimal, Entity entity)
@@ -66,7 +69,7 @@ namespace GuessingGameTest
                 controller.NewTrait = trait;
                 //}
             }
-            controller.Found = true;
+            controller.End = true;
             return result;
         }
 

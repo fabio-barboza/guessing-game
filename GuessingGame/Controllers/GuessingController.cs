@@ -11,7 +11,9 @@ namespace GuessingGame.Controllers
     {
         private readonly Entity _root = new Entity("");
 
-        public bool Found { set; get; } = false;
+        public bool End { set; get; } = false;
+
+        public bool Win { set; get; } = false;
 
         public string NewTrait { set; get; } = null;
         public string NewAnimal { set; get; } = null;
@@ -56,7 +58,8 @@ namespace GuessingGame.Controllers
             NewTrait = null;
             NewAnimal = null;
             NewEntityParent = null;
-            Found = false;
+            Win = false;
+            End = false;
         }
 
     }
